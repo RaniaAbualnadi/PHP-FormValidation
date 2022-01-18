@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "dp.php";
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +15,49 @@ session_start();
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 <body>
+
+<?php
+$msg="";
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+	$username=$_POST['username'];
+	$email=$_POST['email'];
+	$password=$_POST['password'];
+		   try{
+			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				if(empty($email) || empty($password) || empty($username)){
+					$msg="<label>All Field Required!!</label>";
+				}
+				else{
+					$query="SELECT * FROM users WHERE password='$password' AND email='$email'";
+					$stmt = $conn->prepare($query);
+					$stmt->execute();
+					$count=$stmt->rowCount();
+					$admin=$conn->prepare("SELECT * FROM users WHERE password='$password' AND email='$email' AND is_admin=1");
+				
+					$admin->execute();
+				
+					if($admin->rowCount()>0){
+					
+						header("Location: admin");
+					}
+					else if($count>0){
+							$_SESSION['username']=$username;
+							header("Location: welcome.php");
+						  }
+					else {
+						$msg="<label>Username or password are wrong!!</label>";
+					}
+				}
+		  } catch(PDOException $e) {
+			echo "Error: " . $e->getMessage();
+		  }
+
+
+}
+
+
+?>
+
 <div class="container">
 			<div class="row main">
 				<div class="panel-heading">
@@ -23,45 +67,8 @@ session_start();
 	               	</div>
 	            </div> 
 				<div class="main-login main-center">
-                    <?php  
-                $x= $_SESSION['user'];   
-
-                //    print_r($x[0]['email']);
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                   
-    
-                   $email_name=$_POST['email']; 
-                   $password_number=$_POST['password'];   
-				   foreach($_SESSION['user'] as $key => $val){
-
-                   if($x[$key]['email'] === $email_name && $password_number ===$x[$key]['password'] )
-                   {
-                      header("Location: welcome.php");
-                    print_r( 'logged in');
-
-                   }
-                   else{
-                       print_r('not correct');
-                   }
-				   }
-
-
-
-
-
-                //    if($x[0]['email'] === $email_name && $password_number ===$x[1]['password'] )
-                //    {
-                //       header("Location: welcome.php");
-                //     print_r( 'logged in');
-
-                //    }
-                //    else{
-                //        print_r('not correct');
-                //    }
-            //   print_r( $email_name);
-            //        print_r($x[0]);
-}              
-                    ?> 
+					
+                 
 					<form class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
 						
 			
@@ -78,7 +85,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 							</div>
 						</div>
 
-		
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">Username</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="username" id="username"  placeholder="Enter your username" 
+                                    
+                                 />
+								</div>
+							</div>
+						</div>
 
 						<div class="form-group">
 							<label for="password" class="cols-sm-2 control-label">Password</label>

@@ -1,6 +1,7 @@
 <?php
 // Start the session
 session_start();
+include "dp.php";
 ?>
 
 <!DOCTYPE html>
@@ -40,28 +41,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($flag == true) {
     
-        // $_SESSION["email"] = $_POST['email'];
-        // $_SESSION["password"] = $_POST['password'];
+    
+         $email=$_POST['email'];
+         $password=$_POST['password'];
+		 $username=$_POST['username'];
 
+        ///    $_SESSION['users'][] = ['email'=>$_POST['email'],'password'=>$_POST['password']];
+		try {
+			// set the PDO error mode to exception
+			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$sql = "INSERT INTO users (username, email, password )
+			  VALUES (:username, :email, :password)";
+			// use exec() because no results are returned
+			$stmt= $conn->prepare($sql);
+			$stmt->execute(['username'=>$username,'email'=>$email,'password'=>$password]);
+			$conn->exec($stmt);
+			echo "New record created successfully";
+			} catch(PDOException $e) {
+			echo $sql . "<br>" . $e->getMessage();
+		   }
   
-        //check array is set or not          // Start the session
-        // $_SESSION['user']=array(); // Makes the session an array
-         $email_name=$_POST['email']; //student_name form field name
-         $password_number=$_POST['password'];   //city_id form field name
-
-        // $useremail = ["email" =>  $email_name];
-        // $userpassword = [ "password" =>$password_number];
-	
-        // array_push($_SESSION['user'],$useremail,$userpassword);   
-
-		$_SESSION['user'][]= [
-			'email' => $_POST['email'],
-			'password' => $_POST['password']
-		];
-
-        print_r($_SESSION['user']);
-	
-        // var_dump($_SESSION['user']);
+		   $conn = null;
         header("Location: Login.php");
     } } 
 
@@ -95,7 +95,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 							</div>
 						</div>
 
-		
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">Username</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Email"/>
+								</div>
+							</div>
+						</div>
+
 
 						<div class="form-group">
 							<label for="password" class="cols-sm-2 control-label">Password</label>

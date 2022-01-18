@@ -1,4 +1,51 @@
+// $_SESSION["email"] = $_POST['email'];
+        // $_SESSION["password"] = $_POST['password'];
+	// $sql = "INSERT INTO store ( username, email, password)
+		// VALUES ( '$username', '$email_name', '$password_number')";
 
+		// if ($conn->query($sql) === TRUE) {
+		//   echo "New record created successfully";
+		// } else {
+		//   echo "Error: " . $sql . "<br>" . $conn->error;
+		// };
+  
+        //check array is set or not          // Start the session
+        //me=$_POST['email']; //student_name form field name
+        //  $password $_SESSION['user']=array(); // Makes the session an array
+
+		   // $useremail = ["email" =>  $email_name];
+        // $userpassword = [ "password" =>$password_number];
+	
+        // array_push($_SESSION['user'],$useremail,$userpassword);   
+
+		// $_SESSION['user'][]= [
+		// 	'email' => $_POST['email'],
+		// 	'password' => $_POST['password']
+		// ];
+        // print_r($_SESSION['user']);
+
+
+        <!-- fff -->
+        	
+		// try {
+		
+		// 	// set the PDO error mode to exception
+		// 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		// 	$sql = "INSERT INTO store (username, email, password)
+	    //     VALUES (:username, :email, :password)";
+		// 	// use exec() because no results are returned
+		// 	$stmt=$conn->prepare($sql);
+		// 	$stmt->execute(['username'=>$username,'email'=>$email_name,'password'=>$password_number]);
+		// 	$conn->exec($stmt);
+		// 	echo "New record created successfully";
+		//   } catch(PDOException $e) {
+		// 	echo $sql . "<br>" . $e->getMessage();
+		//   }
+		  
+		//   $conn = null;
+		//    header("Location: Login.php");
+
+		//   }
 <?php  
 // define variables to empty values  
 $nameErr = $emailErr = $mobilenoErr = $genderErr = $websiteErr = $agreeErr = "";  

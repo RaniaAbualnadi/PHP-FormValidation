@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "dp.php";
 ?>
 
 <!DOCTYPE html>
@@ -13,16 +14,16 @@ session_start();
 <body>
     <?php  
     
-    $x= $_SESSION['user'];   
+
 
      
-    echo "welcome <br>";
+    echo "welcome " .$_SESSION['username']. "<br>";
  
 
-    foreach($_SESSION['user'] as $key => $val){
-        print_r($val[$key]['email']);
+    // foreach($_SESSION['user'] as $key => $val){
+    //     print_r($val[$key]['email']);
         
-        }
+    //     }
     // echo "Your Email:" .$x[0].['email']. ;
     // echo "$x[0]['email']";
     ?>
