@@ -19,12 +19,12 @@ include "dp.php";
 <?php
 $msg="";
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$username=$_POST['username'];
+	
 	$email=$_POST['email'];
 	$password=$_POST['password'];
 		   try{
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				if(empty($email) || empty($password) || empty($username)){
+				if(empty($email) || empty($password) ){
 					$msg="<label>All Field Required!!</label>";
 				}
 				else{
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 						header("Location: admin");
 					}
 					else if($count>0){
-							$_SESSION['username']=$username;
+							$_SESSION['username']=$email;
 							header("Location: welcome.php");
 						  }
 					else {
@@ -85,17 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label for="email" class="cols-sm-2 control-label">Username</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="username" id="username"  placeholder="Enter your username" 
-                                    
-                                 />
-								</div>
-							</div>
-						</div>
+	
 
 						<div class="form-group">
 							<label for="password" class="cols-sm-2 control-label">Password</label>
