@@ -90,11 +90,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+									<input type="email" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
 								</div>
 							</div>
 						</div>
-
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">Mobile</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+									<input type="number" class="form-control" name="mobile" id="mobile"  placeholder="Enter your Mobile"/>
+								</div>
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="email" class="cols-sm-2 control-label">Username</label>
 							<div class="cols-sm-10">
@@ -122,6 +130,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 									<input type="password" class="form-control" name="confirmpassword" id="confirmpassword"  placeholder="Confirm your Password"/>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="confirm" class="cols-sm-2 control-label">Birthday</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+
+                                       <input type="date" id="birthday" name="birthday">
 								</div>
 							</div>
 						</div>
