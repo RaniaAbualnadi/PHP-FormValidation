@@ -1,8 +1,5 @@
-
 <?php
 $servername = "localhost";
-// $username = "raniaab";
-// $password = "p@ssw0rdrania1993";
 $username = "root";
 $database = "store";
 try {
@@ -291,46 +288,59 @@ $(document).ready(function(){
 							<h2>Manage <b>Employees</b></h2>
 						</div>
 						<div class="col-xs-6">
-							<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+							<a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Products</span></a>
 							<!-- <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						 -->
 						</div>
 					</div>
 				</div>
 				<table class="table table-striped table-hover">
-					<thead>
-						<tr>
-		
-							<th>ID</th>
-							<th>Name</th>
-							<th>Email</th>
-							<th>Password</th>
-	
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-                        <?php
+                    <thead>
+                        <tr>
 
-                        $data = $conn->prepare("SELECT * FROM users WHERE is_admin=0 ");
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>description</th>
+                            <th>has_discount</th>
+                            <th>Stock</th>
+                            <th>Category ID</th>
+                            <th>Product Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $data = $conn->prepare("SELECT * FROM  products");
                         $data->execute();
 
+                        ?>
+                        <?php
                         foreach ($data as $item) {
-                            echo " <tr>
-                                            <td>$item[id]</td>
-                                            <td>$item[username]</td>
-                                            <td>$item[email]</td>
-                                            <td>$item[password]</td>
-                                            <td>
-											
-
-											<form method='POST' >  <input type='hidden' name='edit' value='$item[id]'/><button> edit</button> </form> 
-											<form method= 'POST'>  <input type='hidden' name='delete' value='$item[id]'/><button> delete</button>  </form>
-
-                                        </td>
-                                        </tr>";
+                        ?>
+                            <tr class="table-row">
+                                <td><?php echo $item["id"]; ?></td>
+                                <td><?php echo $item["product_name"]; ?></td>
+                                <td><?php echo $item["product_price"]; ?></td>
+                                <td><?php echo $item["product_desc"]; ?></td>
+                                <td><?php echo $item["has_discount"]; ?></td>
+                                <td><?php echo $item["stock"]; ?></td>
+                                <td><?php echo $item["category_id"]; ?></td>
+                                <td><img src=<?php echo $item["product_img"];?>/></td>
+                                <td>
+                                <a href='delete.php?id=<?= $item["id"] ?>'><button>Delete </button></a>
+                                <a href='edit.php?id=<?= $item["id"] ?>'><button>Edit </button></a>
+                                
+                                </td>
+                            </tr>
+                        <?php
                         }
+
                         ?>
 
+
+                    </tbody>
+                </table>
+  
+<!-- // <form method= 'POST'>  <input type='hidden' name='delete' value='$item[id]'/><button> delete</button>  </form> -->
                     </tbody>
 				</table>
 				<div class="clearfix">
@@ -352,49 +362,7 @@ $(document).ready(function(){
 	<div id="addEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<!-- form -->
-				<form method="post" action="<?php $_SERVER["PHP_SELF"]; ?>">
-					<div class="modal-header">
-						<h4 class="modal-title">Add Employee</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>username</label>
-							<input type="text" class="form-control" name="username" required>
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input type="email" class="form-control" name="email" required>
-						</div>
-						<div class="form-group">
-							<label>Password</label>
-							<input type="password" class="form-control" name="password" required>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" value="Add">
-					</div>
-					<?php
-
-					if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-						$email = $_POST['email'];
-						$password = $_POST['password'];
-						$username = $_POST['username'];
-
-						//storing new user in database
-						$sql = "INSERT INTO users (email,password,username)
-	                     	VALUES ('$email','$password','$username')";
-						// use exec() because no results are returned
-						$conn->exec($sql);
-						echo "New record created successfully";
-
-					}
-
-
-					?>
-				</form>
+				<?php include_once './create.php'?>
 			</div>
 		</div>
 	</div>
@@ -409,35 +377,7 @@ $(document).ready(function(){
 	<div id="editEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form method="post" action="edit.php">
-				<form >
-					<div class="modal-header">						
-						<h4 class="modal-title">Edit Employee</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					</div>
-					<div class="modal-body">					
-						<div class="form-group">
-							<label>Name</label>
-							<input type="text" class="form-control" name="username" required>
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input type="email" class="form-control" name="email" required>
-						</div>
-						<div class="form-group">
-							<label>Address</label>
-							<textarea class="form-control" required></textarea>
-						</div>
-						<div class="form-group">
-							<label>Phone</label>
-							<input type="text" class="form-control" required>
-						</div>					
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-info" value="Save">
-					</div>
-				</form>
+            <?php include_once './edit.php'?>
 			</div>
 		</div>
 	</div>
@@ -445,36 +385,7 @@ $(document).ready(function(){
 	<div id="deleteEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form method="post" action="<?php $_SERVER["PHP_SELF"]; ?>">
-					<div class="modal-header">						
-						<h4 class="modal-title">Delete Employee</h4>
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					</div>
-					<div class="modal-body">					
-						<p>Are you sure you want to delete these Records?</p>
-						<p class="text-warning"><small>This action cannot be undone.</small></p>
-					</div>
-					<div class="modal-footer">
-						<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" >
-						<input type="submit" class="btn btn-danger" value="Delete"   >
-					</div>
-					<?php
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-	$value=  $_POST['delete'];
-
-
-	//storing new user in database
-	$sql = "DELETE FROM users WHERE id=$value";
-	print_r($sql);
-	$conn->exec($sql);
-	echo "Record deleted successfully";
-	
-}
-
-?>
-				</form>
+            <?php include_once './delete.php'?>
 			</div>
 		</div>
 	</div>

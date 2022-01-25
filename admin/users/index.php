@@ -319,13 +319,13 @@ $(document).ready(function(){
                                             <td>$item[email]</td>
                                             <td>$item[password]</td>
                                             <td>
-                                            <form method= 'POST' action='edit.php' > <a href='#editEmployeeModal' class='edit' data-toggle='modal'> <input  type='hidden'  name='edit' value='$item[id]'/><button> Edit</button> </a>  </form>
-											<form method= 'POST'>  <input type='hidden' name='delete' value='$item[id]'/><button> delete</button>  </form>
-
+											<a href='edit.php?id=$item[id]' class='edit' data-toggle='modal'>Edit</a>
+											<a href='delete.php?id=$item[id]'>Delete</a>
                                         </td>
                                         </tr>";
                         }
                         ?>
+<!-- <form method= 'POST'>  <input type='hidden' name='delete' value='$item[id]'/><button> delete</button>  </form> -->
 
                     </tbody>
 				</table>
@@ -376,4 +376,4 @@ $(document).ready(function(){
 		</div>
 	</div>
 </body>
-</html>s
+</html>

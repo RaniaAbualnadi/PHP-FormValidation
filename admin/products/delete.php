@@ -8,9 +8,12 @@ $database = "store";
 
 if ($_SERVER["REQUEST_METHOD"]=="GET") {
 	$value= $_GET["id"];
-    $sql = "DELETE FROM users WHERE id=$value";
+    $sql = "DELETE FROM products WHERE id=$value";
     $conn->exec($sql);
     echo "Record deleted successfully";
-	header ('location: http://localhost/PHP/formvalidation/admin/users/');
+	header ('location: http://localhost/PHP/formvalidation/admin/products/');
 }
+
+
+
 ?>
